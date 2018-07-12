@@ -78,7 +78,7 @@ initMap = () => {
         scrollWheelZoom: false
       });
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
-    mapboxToken: '<your MAPBOX API KEY HERE>',
+    mapboxToken: 'pk.eyJ1IjoiaGltYW5zaHVuZWdpIiwiYSI6ImNqajVveW9zejFyNnIzcW1udHh3bzQwcWMifQ.3F-UUyjUNDtCGtQ9-E4MmA',
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
       '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -116,7 +116,7 @@ updateRestaurants = () => {
 
   DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
     if (error) { // Got an error!
-      console.error(error);
+      console.error("unable to fetch cuisine and restaurants");
     } else {
       resetRestaurants(restaurants);
       fillRestaurantsHTML();
@@ -161,6 +161,9 @@ createRestaurantHTML = (restaurant) => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.alt = restaurant.name;
+  image.srcset = DBHelper.imageSrcForRestaurant(restaurant);
+  //image.sizes = "(max-width: 600px) 400w, 600w";
   li.append(image);
 
   const name = document.createElement('h1');
