@@ -1,6 +1,6 @@
 let restaurants,
-  neighborhoods,
-  cuisines
+    neighborhoods,
+    cuisines
 var newMap
 var markers = []
 
@@ -122,6 +122,7 @@ updateRestaurants = () => {
       fillRestaurantsHTML();
     }
   })
+    
 }
 
 /**
@@ -161,9 +162,8 @@ createRestaurantHTML = (restaurant) => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  image.alt = restaurant.name;
+  image.alt = "image of "+restaurant.name+" restaurant";
   image.srcset = DBHelper.imageSrcForRestaurant(restaurant);
-  //image.sizes = "(max-width: 600px) 400w, 600w";
   li.append(image);
 
   const name = document.createElement('h1');
@@ -176,6 +176,7 @@ createRestaurantHTML = (restaurant) => {
 
   const address = document.createElement('p');
   address.innerHTML = restaurant.address;
+  address.classList.add("restaurant-address");
   li.append(address);
 
   const more = document.createElement('a');
@@ -199,8 +200,65 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     }
     self.markers.push(marker);
   });
-
+    
+    updateTabindex();
 } 
+
+/* aasigning new tab indexes to the elements */
+
+updateTabindex = (restaurants) => {
+      var y = -1;
+      leafletTabIndex(y);
+      locationTabindex(y);
+      document.getElementsByClassName("leaflet-right")[1].setAttribute("tabindex", "0");
+      
+      var z = document.getElementById("restaurants-list").querySelectorAll("li");
+      for( i=0 ; i<z.length ; i++) {
+           z[i].setAttribute("tabindex", "0");
+      }
+      console.log("tabindex added");
+}
+
+/* to change the tabindex of the leaflet at right bottom of the map */
+function leafletTabIndex(y) {
+      var x = document.getElementsByClassName("leaflet-control")[1].querySelectorAll("a"); 
+      
+      for(var i = 0; i < x.length ; i++) {
+          x[i].setAttribute("tabindex", y);
+      }
+}
+
+/* to change the tabindex of the the locations inside the map which are marked with blue location marker*/
+function locationTabindex(y) {
+    var x = document.getElementsByClassName("leaflet-marker-pane")[0].querySelectorAll("img");
+      
+      for( var i =0 ; i< x.length ; i++ ) {
+          x[i].setAttribute("tabindex", y);
+      }
+}
+
+/* event to listen for the space keypres in order to get inside the sub-elements */
+window.addEventListener("keypress", changeTabindex , false);
+
+function changeTabindex(e) {
+    var x = document.getElementById("map");
+    var y = document.getElementsByClassName("leaflet-right")[1];
+    var keyCode = e.keyCode;
+    
+    /* on keypress "enter", the focus will jump into the sub-element and changes the tabIndex */
+    
+    if((keyCode == 13)&& (document.activeElement == x)){
+        console.log("enter to map");
+        locationTabindex(0);
+        document.getElementsByClassName("leaflet-marker-pane")[0].querySelectorAll("img")[0].focus();
+    }
+    
+    else if((keyCode == 13)&& (document.activeElement == y)) {
+        console.log("enter to leaflet");
+        leafletTabIndex(0);
+        document.getElementsByClassName("leaflet-control")[1].querySelectorAll("a")[0].focus();        
+    }
+};
 /* addMarkersToMap = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     // Add marker to the map

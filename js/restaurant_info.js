@@ -89,6 +89,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.alt = "image of "+restaurant.name+" restaurant";
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -141,6 +142,9 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
     ul.appendChild(createReviewHTML(review));
   });
   container.appendChild(ul);
+   
+  /* calling function to give tabIndexes to elements */
+  updateTabindex2();
 }
 
 /**
@@ -163,9 +167,27 @@ createReviewHTML = (review) => {
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
   li.appendChild(comments);
-
+    
   return li;
 }
+
+/* function to assighn tabindexes */
+
+function updateTabindex2() {
+    document.getElementById("restaurant-address").setAttribute("tabindex" ,"0");
+    
+    /* assigning tabindex 0 to tables in restaurant hours */
+    var x = document.getElementById("restaurant-hours").querySelectorAll("tr");
+    for( var i=0 ; i < x.length ; i++ ) {
+        x[i].setAttribute("tabindex", "0");
+    }
+    
+    /* assigning tabindex 0 to reviews list */
+    var y = document.getElementById("reviews-list").querySelectorAll("li");
+    for( var i=0 ; i < y.length ; i++ ) {
+        y[i].setAttribute("tabindex", "0");
+    }    
+} 
 
 /**
  * Add restaurant name to the breadcrumb navigation menu
