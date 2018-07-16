@@ -166,6 +166,7 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  */
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
+  li.tabIndex = '0';
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
@@ -190,6 +191,8 @@ createRestaurantHTML = (restaurant) => {
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
+  more.setAttribute("role", "button");
+  more.setAttribute("aria-label", "View details of "+restaurant.name+" restaurant");
   li.append(more)
 
   return li
@@ -219,12 +222,8 @@ updateTabindex = (restaurants) => {
       leafletTabIndex(y);
       locationTabindex(y);
       document.getElementsByClassName("leaflet-right")[1].setAttribute("tabindex", "0");
-      
-      var z = document.getElementById("restaurants-list").querySelectorAll("li");
-      for( i=0 ; i<z.length ; i++) {
-           z[i].setAttribute("tabindex", "0");
-      }
       console.log("tabindex added");
+      
 }
 
 /* to change the tabindex of the leaflet at right bottom of the map */
@@ -238,14 +237,14 @@ function leafletTabIndex(y) {
 
 /* to change the tabindex of the the locations inside the map which are marked with blue location marker*/
 function locationTabindex(y) {
-    var x = document.getElementsByClassName("leaflet-marker-pane")[0].querySelectorAll("img");
+      var x = document.getElementsByClassName("leaflet-marker-pane")[0].querySelectorAll("img");
       
       for( var i =0 ; i< x.length ; i++ ) {
           x[i].setAttribute("tabindex", y);
       }
 }
 
-/* event to listen for the space keypres in order to get inside the sub-elements */
+/* event to listen for the enter keypress in order to get inside the sub-elements */
 window.addEventListener("keypress", changeTabindex , false);
 
 function changeTabindex(e) {
