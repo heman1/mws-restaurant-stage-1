@@ -5,7 +5,7 @@ self.addEventListener('install', function(e) {
   e.waitUntil(
       //adding the urls to cache
     caches.open(staticCacheName).then(function(cache) {
-      console.log('ServiceWorker is doing it\'s work');
+      console.log('sw is caching files');
       return cache.addAll(
           ['/',
            '/index.html',
@@ -14,7 +14,10 @@ self.addEventListener('install', function(e) {
            '/img/',
            '/data/',
            '/css/',
-           '/js/',
+           '/js/dbhelper.js',
+           '/js/main.js',
+           '/js/restaurant_info.js',
+           '/manifest.json'
           ]); //including files that needs to be cached.
     })
   );

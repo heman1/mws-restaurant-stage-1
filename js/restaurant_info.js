@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 initMap = () => {
   fetchRestaurantFromURL((error, restaurant) => {
     if (error) { // Got an error!
-      console.error(error);
+      console.error(`url is ${restaurant}error at initmap : ${error}`);
     } else {      
       self.newMap = L.map('map', {
         center: [restaurant.latlng.lat, restaurant.latlng.lng],
