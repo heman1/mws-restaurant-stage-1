@@ -21,26 +21,26 @@ Please make sure you have these installed before proceeding forward.
  >For Server
   ###### Install project dependancies
   ```Install project dependancies
-  # npm i
+  npm i
   ```
   ###### Install Sails.js globally
   ```Install sails global
-  # npm i sails -g
+  npm i sails -g
   ```
   ###### Start the server
   ```Start server
-  # node server
+  node server
   ```
  >For Client
   ###### Install project dependencies
   ```Install project dependencies
-  # npm install
+  npm install
   ```
   ###### Run gulp(optional, to get production code)
   ```Run gulp(optional, to get production code)
-  # gulp
+  gulp
   ```
   ###### Run local server
   ``` Run local server
-  # python -m http.server 1337
+  python -m http.server 1337
   ```
