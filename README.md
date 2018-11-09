@@ -17,7 +17,7 @@ Please make sure you have these installed before proceeding forward.
 * babel
 
 # Installation
-* clone the server repo from [here](https://github.com/heman1/mws-restaurant-stage-2)
+* clone the server repo from [here](https://github.com/udacity/mws-restaurant-stage-3)
  >For Server
   ###### Install project dependancies
   ```Install project dependancies
