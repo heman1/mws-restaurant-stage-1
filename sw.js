@@ -13,7 +13,8 @@ self.addEventListener('install', function(e) {
            '/sw.js',
            '/img/',
            '/data/',
-           '/css/',
+           '/css/styles.css',
+           '/css/responsive.css',
            '/js/dbhelper.js',
            '/js/main.js',
            '/js/restaurant_info.js',
@@ -42,7 +43,9 @@ self.addEventListener('activate',  event => {
 //or responding with the network if available
 self.addEventListener('fetch' , event => {
   event.respondWith(
-    caches.match(event.request, {ignoreSearch : true}).then(function(response) {
+    caches.match(event.request, {
+        ignoreSearch : true
+    }).then(function(response) {
         return response || fetch(event.request);
     })
   );

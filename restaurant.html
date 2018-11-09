@@ -30,9 +30,8 @@
     <!-- End breadcrumb -->
     <!-- End nav -->
   </header>
-  
   <!-- End header -->
-
+  
   <!-- Beginning main -->
       <main id="maincontent">
 
@@ -44,7 +43,7 @@
 
             <!-- Beginning restaurant -->
                 <section id="restaurant-container">
-                      <h1 id="restaurant-name"></h1>
+                    <h1 id="restaurant-name"></h1><div tabindex="0" id='fav'></div>
                       <div id="restaurant-card" tabindex="0">
                           <img id="restaurant-img">
                           <p id="restaurant-cuisine"></p>
@@ -61,10 +60,43 @@
                   <ul id="reviews-list"></ul>
                 </section>
             <!-- End reviews -->
+  
+            <!-- Add reviews -->
+                <section id="add-review">
+                <form tabindex="0" aria-label="add review form" id="addReviewForm" method="post" onsubmit="addReview()">
+                  <div class="fName"><label for="input-name">Name: </label><input id="input-name"class="getName" type=text required>
+                  </div>
+                  <div class="fRate">
+                    <label>Rating: </label>
+                    <select aria-label="select rating" class="getRate" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                  </div>
+                   <div class="fComment">
+                       <label for="input-comment">Comments: </label><br>
+                       <textarea id="input-comment" class="getComment" rows="3" required></textarea>
+                   </div>
+                       <button class="fBtn" tabindex="0" role="button" aria-label="add review button" type="submit">Add Review</button>
+                </form>
+                </section>
+            <!-- End add review -->
             
       </main>
   <!-- End main -->
 
+  <!-- pop-up -->
+  <div class="alert">
+    <div class="content">
+    <i class="star"></i>
+    <div class="context"></div>
+    </div>
+  </div>
+  <!-- pop-up end -->
+  
   <!-- Beginning footer -->
       <footer id="footer">
         Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.

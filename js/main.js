@@ -154,13 +154,16 @@ const resetRestaurants = (restaurants) => {
 
 /**
  * Create all restaurants HTML and add them to the webpage.
- */
+ **/
 const fillRestaurantsHTML = (restaurants = self.restaurants) => {
   const ul = document.getElementById('restaurants-list');
   restaurants.forEach(restaurant => {
     ul.append(createRestaurantHTML(restaurant));
   });
   addMarkersToMap();
+//  restaurants.forEach(restaurant => {
+//     toggelClass(restaurant.id); 
+//  });
 }
 
 /**
@@ -180,6 +183,51 @@ createRestaurantHTML = (restaurant) => {
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;
   li.append(name);
+    
+  // favourite marker
+  const fav = document.createElement('div');
+  fav.innerHTML = '🟊'; //character for star (may not appear on your editor)
+  fav.setAttribute('tabindex', '0');
+  fav.setAttribute('name', restaurant.id);
+  fav.setAttribute('role', 'button');
+  fav.setAttribute('aria-label', 'favourite button');
+  if(restaurant.is_favorite === 'true') {
+        fav.classList.add('favourite-true');
+        fav.setAttribute('aria-pressed', 'true');
+  }
+  else {
+        fav.classList.remove('favourite-true');
+        fav.classList.add('favourite');
+        fav.setAttribute('aria-pressed', 'false');
+  }
+  
+  fav.addEventListener('click', (e)=> {
+      changeState();
+  });
+  fav.onkeypress = function(e) {
+      if(e.keyCode===13)
+          changeState();
+      else
+          return;
+  }
+  function changeState() {
+      if (fav.classList.contains('favourite-true')) {
+          fav.classList.remove('favourite-true');
+          fav.classList.add('favourite');
+          fav.setAttribute('aria-pressed', 'false');
+          DBHelper.updateFavourite(restaurant.id, 'false');
+          popup('false');
+      }
+      else {
+          fav.classList.remove('favourite');
+          fav.classList.add('favourite-true');
+          fav.setAttribute('aria-pressed', 'true');
+          DBHelper.updateFavourite(restaurant.id, 'true');
+          popup('true');
+      }
+  }
+  li.append(fav);
+  
 
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
@@ -200,6 +248,31 @@ createRestaurantHTML = (restaurant) => {
   return li
 }
 
+/**
+* pop-up
+**/
+popup = (value)=> {
+    console.log('inside popup');
+    pop = document.getElementsByClassName('alert')[0];
+    context = document.getElementsByClassName('context')[0];
+    star = document.getElementsByClassName('star')[0];
+    pop.style.visibility = 'visible';
+    pop.classList.remove('hide');
+    if(value==='true') {
+        console.log("marked as favourite");
+        context.innerHTML = 'Marked as favourite';
+        star.innerHTML = '🟊';
+    }
+    else {
+        console.log("removed from favourite");
+        context.innerHTML = 'Removed from favourite';
+        star.innerHTML = '&#9888;';
+    }
+    window.setTimeout(function(){
+        pop.classList.add('hide');
+    }, 2000);
+    
+}
 /**
  * Add markers for current restaurants to the map.
  */
